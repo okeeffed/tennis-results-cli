@@ -19,7 +19,7 @@ function calculateMatchReducer(
   // Handle it because the provided text file includes scores
   // that continue after the match is over.
   if (state.matchWinner !== undefined) {
-    if (argv.debug) {
+    if (argv.debug || argv.d) {
       console.warn('Warning: Attemping to update state after match is over.')
     }
     return state

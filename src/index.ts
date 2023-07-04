@@ -23,7 +23,7 @@ function delegateToCommand({
       throw new Error(`Match not found: ${matchId}`)
     }
 
-    queryMatchResult(match, argv.debug)
+    queryMatchResult(match, argv.debug || argv.d)
   } else if (/Games Player/.test(input)) {
     const player = input.split('Games Player ')[1]
     console.log(player)
@@ -33,6 +33,18 @@ function delegateToCommand({
 }
 
 function main() {
+  if (argv.help || argv.h) {
+    console.log(`
+    Usage: @okeeffed/tennis-results-cli [input file] [options]
+
+    Options:
+      --help, -h      Print this message.
+      --dev           Run the program with a fallback input.
+      --debug, -d     Run the program with debug mode enabled.
+    `)
+    return
+  }
+
   const inlineArgs = argv._
   const inputFile = argv.dev ? TARGET_FILE : inlineArgs[0]
 
