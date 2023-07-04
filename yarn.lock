@@ -229,6 +229,11 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.4.tgz#0b92dcc0cc1c81f6f306a381f28e31b1a56536e9"
   integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
 
+"@tsconfig/node18@^18.2.0":
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-18.2.0.tgz#d6b5358b3fa85fe89b13b46cb1e996e4d79d6a07"
+  integrity sha512-yhxwIlFVSVcMym3O31HoMnRXpoenmpIxcj4Yoes2DUpe+xCJnA7ECQP1Vw889V0jTt/2nzvpLQ/UuMYCd3JPIg==
+
 "@types/minimist@^1.2.0":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
@@ -1250,7 +1255,7 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-"typescript@^4.6.4 || ^5.0.0":
+"typescript@^4.6.4 || ^5.0.0", typescript@^5.1.6:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
