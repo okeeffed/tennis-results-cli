@@ -13,7 +13,7 @@ describe('calculateMatchResult', () => {
       }
     })
 
-    test('should return expected state history array', () => {
+    test('should return expected state history array for a won game', () => {
       const rallies = new Array(4).fill({
         type: 'PLAYER_ONE_WIN',
       })
@@ -22,6 +22,8 @@ describe('calculateMatchResult', () => {
         {
           playerOneScore: 1,
           playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
           currentScore: '15 - 0',
           rallyWinnerRawValue: '0',
           matchWinner: undefined,
@@ -29,6 +31,8 @@ describe('calculateMatchResult', () => {
         {
           playerOneScore: 2,
           playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
           currentScore: '30 - 0',
           rallyWinnerRawValue: '0',
           matchWinner: undefined,
@@ -36,6 +40,8 @@ describe('calculateMatchResult', () => {
         {
           playerOneScore: 3,
           playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
           currentScore: '40 - 0',
           rallyWinnerRawValue: '0',
           matchWinner: undefined,
@@ -43,11 +49,204 @@ describe('calculateMatchResult', () => {
         {
           playerOneScore: 4,
           playerTwoScore: 0,
+          playerOneSetsWon: 1,
+          playerTwoSetsWon: 0,
+          currentScore: 'Game',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+      ])
+    })
+
+    test('should return expected state history array for a match game', () => {
+      const rallies = new Array(8).fill({
+        type: 'PLAYER_ONE_WIN',
+      })
+
+      expect(calculateMatchResult(rallies).history).toEqual([
+        {
+          playerOneScore: 1,
+          playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
+          currentScore: '15 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 2,
+          playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
+          currentScore: '30 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 3,
+          playerTwoScore: 0,
+          playerOneSetsWon: 0,
+          playerTwoSetsWon: 0,
+          currentScore: '40 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 4,
+          playerTwoScore: 0,
+          playerOneSetsWon: 1,
+          playerTwoSetsWon: 0,
+          currentScore: 'Game',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 1,
+          playerTwoScore: 0,
+          playerOneSetsWon: 1,
+          playerTwoSetsWon: 0,
+          currentScore: '15 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 2,
+          playerTwoScore: 0,
+          playerOneSetsWon: 1,
+          playerTwoSetsWon: 0,
+          currentScore: '30 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 3,
+          playerTwoScore: 0,
+          playerOneSetsWon: 1,
+          playerTwoSetsWon: 0,
+          currentScore: '40 - 0',
+          rallyWinnerRawValue: '0',
+          matchWinner: undefined,
+        },
+        {
+          playerOneScore: 4,
+          playerTwoScore: 0,
+          playerOneSetsWon: 2,
+          playerTwoSetsWon: 0,
           currentScore: 'Game',
           rallyWinnerRawValue: '0',
           matchWinner: 0,
         },
       ])
+    })
+
+    test('should handle a complicated win scenario', () => {
+      // We are expecting Player 2 to win 2 - 1 in sets.
+      const rallies = [
+        // First set: 6 - 4
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        // Second set: 4 - 6
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+
+        // Third set: 5 - 6
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_ONE_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+        {
+          type: 'PLAYER_TWO_WIN',
+        },
+      ] satisfies RallyAction[]
+
+      expect(calculateMatchResult(rallies).matchWinner).toEqual(1)
+      expect(calculateMatchResult(rallies).playerOneSetsWon).toEqual(1)
+      expect(calculateMatchResult(rallies).playerTwoSetsWon).toEqual(2)
+      expect(calculateMatchResult(rallies).playerOneScore).toEqual(5)
+      expect(calculateMatchResult(rallies).playerTwoScore).toEqual(6)
+      expect(calculateMatchResult(rallies).currentScore).toEqual('Game')
     })
   })
 
@@ -106,7 +305,7 @@ describe('calculateMatchResult', () => {
       expect(result.playerOneScore).toEqual(4)
       expect(result.playerTwoScore).toEqual(0)
       expect(result.currentScore).toEqual('Game')
-      expect(result.matchWinner).toEqual(0)
+      expect(result.matchWinner).toEqual(undefined)
       expect(result.rallyWinnerRawValue).toEqual('0')
     })
   })

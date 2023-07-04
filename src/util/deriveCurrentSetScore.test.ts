@@ -1,4 +1,4 @@
-import { deriveCurrentMatchScore } from './deriveCurrentMatchScore'
+import { deriveCurrentMatchScore } from './deriveCurrentSetScore'
 import cases from 'jest-in-case'
 
 describe('deriveCurrentMatchScore', () => {
