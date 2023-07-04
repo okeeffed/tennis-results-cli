@@ -27,6 +27,5 @@ export type MatchResultState = {
   currentScore: string
   history: Omit<MatchResultState, 'history'>[]
   rallyWinnerRawValue?: string
-  setWinner?: number
   matchWinner?: number
 }
