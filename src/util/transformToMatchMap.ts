@@ -1,17 +1,4 @@
-import type { RallyAction } from './types'
-
-export type Match = {
-  // Provided Match id
-  id: string
-  // Name of the first player
-  playerOne: string
-  // Name of the second player
-  playerTwo: string
-  // 0s and 1s turned into a string array
-  rallyResults: string[]
-  // An array of Rally objects
-  rallyActions: RallyAction[]
-}
+import type { RallyAction, Match } from './types'
 
 /**
  * Parses valid input to get the match ID.
