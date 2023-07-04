@@ -1,18 +1,11 @@
-import { deriveCurrentMatchScore } from './deriveCurrentMatchScore'
-import type { RallyAction } from './types'
-
-type MatchResultState = {
-  playerOneScore: number
-  playerTwoScore: number
-  currentScore: string
-  history: Omit<MatchResultState, 'history'>[]
-  rallyWinnerRawValue?: string
-  matchWinner?: number
-}
+import { deriveCurrentMatchScore } from './deriveCurrentSetScore'
+import type { RallyAction, MatchResultState } from './types'
 
 const initialValue = {
   playerOneScore: 0,
   playerTwoScore: 0,
+  playerOneSetsWon: 0,
+  playerTwoSetsWon: 0,
   currentScore: '0 - 0',
   history: [],
 }
@@ -28,22 +21,35 @@ function replayMatchReducer(
 
   let playerOneScore = state.playerOneScore
   let playerTwoScore = state.playerTwoScore
+  let playerOneSetsWon = state.playerOneSetsWon
+  let playerTwoSetsWon = state.playerTwoSetsWon
   let currentScore = state.currentScore
   let newValue
 
+  if (state.currentScore === 'Game') {
+    playerOneScore = 0
+    playerTwoScore = 0
+    currentScore = '0 - 0'
+  }
+
   switch (payload.type) {
     case 'PLAYER_ONE_WIN':
-      playerOneScore = state.playerOneScore + 1
+      playerOneScore = playerOneScore + 1
       currentScore = deriveCurrentMatchScore(
         `${playerOneScore} - ${playerTwoScore}`
       )
+      playerOneSetsWon =
+        currentScore === 'Game' ? playerOneSetsWon + 1 : playerOneSetsWon
 
       newValue = {
         rallyWinnerRawValue: '0',
-        playerOneScore: state.playerOneScore + 1,
-        playerTwoScore: state.playerTwoScore,
+        playerOneScore: playerOneScore,
+        playerTwoScore: playerTwoScore,
+        playerOneSetsWon: playerOneSetsWon,
+        playerTwoSetsWon: playerTwoSetsWon,
         currentScore: currentScore,
-        matchWinner: currentScore === 'Game' ? 0 : undefined,
+        matchWinner:
+          currentScore === 'Game' && playerOneSetsWon === 2 ? 0 : undefined,
       }
 
       return {
@@ -51,17 +57,22 @@ function replayMatchReducer(
         history: [...state.history, newValue],
       }
     case 'PLAYER_TWO_WIN':
-      playerTwoScore = state.playerTwoScore + 1
+      playerTwoScore = playerTwoScore + 1
       currentScore = deriveCurrentMatchScore(
         `${playerOneScore} - ${playerTwoScore}`
       )
+      playerTwoSetsWon =
+        currentScore === 'Game' ? playerTwoSetsWon + 1 : playerTwoSetsWon
 
       newValue = {
         rallyWinnerRawValue: '1',
-        playerOneScore: state.playerOneScore,
-        playerTwoScore: state.playerTwoScore + 1,
+        playerOneScore: playerOneScore,
+        playerTwoScore: playerTwoScore,
+        playerOneSetsWon: playerOneSetsWon,
+        playerTwoSetsWon: playerTwoSetsWon,
         currentScore: currentScore,
-        matchWinner: currentScore === 'Game' ? 1 : undefined,
+        matchWinner:
+          currentScore === 'Game' && playerTwoSetsWon === 2 ? 1 : undefined,
       }
       return {
         ...newValue,
