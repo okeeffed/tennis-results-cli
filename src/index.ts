@@ -35,7 +35,7 @@ function delegateToCommand({
 function main() {
   if (argv.help || argv.h) {
     console.log(`
-    Usage: @okeeffed/tennis-results-cli [input file] [options]
+    Usage: tennis-results-cli [input file] [options]
 
     Options:
       --help, -h      Print this message.
