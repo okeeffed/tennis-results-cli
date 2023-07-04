@@ -2,11 +2,10 @@ name: CI
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
-    if: ${{ startsWith(github.head_ref, 'release/') }}
     name: Build, Test and Publish
     timeout-minutes: 15
     permissions:
@@ -48,6 +47,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
         if: steps.yarn-cache.outputs.cache-hit != 'true'
+
+      - name: Run Prod Dependency Audit
+        run: yarn npm audit --recursive --environment production --all
+
+      - name: Run Dev Dependency Audit
+        run: yarn npm audit --recursive --environment development --all
+        continue-on-error: true
 
       - name: Lint check
         run: yarn lint
