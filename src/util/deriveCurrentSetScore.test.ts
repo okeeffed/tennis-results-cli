@@ -48,6 +48,36 @@ describe('deriveCurrentMatchScore', () => {
         input: '2 - 2',
         expected: '30 - 30',
       },
+      {
+        name: 'should return 0 - 40',
+        input: '0 - 3',
+        expected: '0 - 40',
+      },
+      {
+        name: 'should return 15 - 40',
+        input: '1 - 3',
+        expected: '15 - 40',
+      },
+      {
+        name: 'should return 30 - 40',
+        input: '2 - 3',
+        expected: '30 - 40',
+      },
+      {
+        name: 'should return 40 - 0',
+        input: '3 - 0',
+        expected: '40 - 0',
+      },
+      {
+        name: 'should return 40 - 15',
+        input: '3 - 1',
+        expected: '40 - 15',
+      },
+      {
+        name: 'should return 40 - 30',
+        input: '3 - 2',
+        expected: '40 - 30',
+      },
     ]
   )
 

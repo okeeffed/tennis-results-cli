@@ -29,6 +29,10 @@ export function deriveCurrentMatchScore(currentMatchScore: string) {
       return '40 - 0'
     case '0 - 3':
       return '0 - 40'
+    case '3 - 1':
+      return '40 - 15'
+    case '1 - 3':
+      return '15 - 40'
     case '3 - 2':
       return '40 - 30'
     case '2 - 3':
