@@ -52,7 +52,7 @@ jobs:
         run: yarn npm audit --recursive --environment production --all
 
       - name: Run Dev Dependency Audit
-        run: yarn npm audit --recursive --environment development --all
+        run: yarn npm audit --environment development
         continue-on-error: true
 
       - name: Lint check
