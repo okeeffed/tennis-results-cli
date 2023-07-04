@@ -1,6 +1,9 @@
 import { WinLoss, WinLossInput } from '@/util/types'
 
-export const calculateWinLossForPlayer = (acc: WinLoss, curr: WinLossInput) => {
+export const calculateWinLossForPlayer = (
+  acc: WinLoss,
+  curr: WinLossInput
+): WinLoss => {
   const { matchResults, match, targetPlayer } = curr
   const { playerOne } = match
 
