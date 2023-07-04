@@ -39,6 +39,8 @@
     "lint": "eslint . --ext .ts",
     "build:pkg": "tsup src/index.ts --dts --format esm,cjs",
     "install:npm": "npm uninstall -g . && npm i --force -g . && google-search-console help",
-    "deploy": "npm run build:pkg && npm run install:npm"
-  }
+    "deploy": "npm run build:pkg && npm run install:npm",
+    "dedupe-check": "bin/dedupe-check"
+  },
+  "packageManager": "yarn@3.6.1"
 }

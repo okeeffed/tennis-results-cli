@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check if we can dedupe
+yarn dedupe-check
+
+# Audit production
+yarn npm audit --environment production --all --recursive
+
+# Echo all changes
+echo "\n# Branch Changelog\n\n$(git log --oneline --pretty=format:"- %s [%h](https://github.com/okeeffed/tennis-results-cli/commit/%H)" origin/main...)\n"
+
+exit 0

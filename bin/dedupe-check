@@ -1,0 +1,10 @@
+#!/bin/bash
+yarn dedupe --check >/dev/null 2>&1
+
+if [[ $? == 0 ]]; then
+  echo "✅ - Dedupe check passed"
+  exit 0
+else
+  echo "🛑 - Dedupe check failed. Please run 'yarn dedupe' and commit the changes."
+  exit 1
+fi
