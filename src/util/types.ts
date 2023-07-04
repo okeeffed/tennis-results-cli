@@ -29,3 +29,17 @@ export type MatchResultState = {
   rallyWinnerRawValue?: string
   matchWinner?: number
 }
+
+export type HasPlayerPredicateInput = {
+  match: Match
+  targetPlayer: string
+}
+
+export type WinLossInput = HasPlayerPredicateInput & {
+  matchResults: MatchResultState
+}
+
+export type WinLoss = {
+  wins: number
+  losses: number
+}
