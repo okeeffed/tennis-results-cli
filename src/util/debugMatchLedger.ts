@@ -10,10 +10,18 @@ export function debugMatchLedger(
   history: Omit<MatchResultState, 'history'>[]
 ) {
   const table = new Table({
-    head: ['Input', 'Score'],
+    head: [
+      'Input',
+      'Score',
+      'P1 Set Score',
+      'P2 Set Score',
+      'P1 Sets Won',
+      'P2 Sets Won',
+      'Winner',
+    ],
   })
 
-  table.push([`Match: ${match.id}`, ''])
+  table.push([`Match: ${match.id}`, '', '', '', ''])
   table.push([`${match.playerOne} vs ${match.playerTwo}`, ''])
 
   history.forEach((entry) => {
@@ -21,8 +29,19 @@ export function debugMatchLedger(
       throw new Error('Unexpected undefined rally winner.')
     }
 
-    table.push([entry.rallyWinnerRawValue, entry.currentScore])
+    const matchWinner =
+      entry.matchWinner !== undefined ? entry.matchWinner.toString() : 'N/A'
+
+    table.push([
+      entry.rallyWinnerRawValue,
+      entry.currentScore,
+      entry.playerOneScore.toString(),
+      entry.playerTwoScore.toString(),
+      entry.playerOneSetsWon.toString(),
+      entry.playerTwoSetsWon.toString(),
+      matchWinner,
+    ])
   })
 
-  console.log(table.toString())
+  console.log(`${table.toString()}\n`)
 }

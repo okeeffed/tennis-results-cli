@@ -27,7 +27,7 @@ describe('queryMatchResult', () => {
     queryMatchResult(match, false)
 
     expect(logSpy).toHaveBeenCalledWith('Person A defeated Person B')
-    expect(logSpy).toHaveBeenCalledWith('2 sets to 0')
+    expect(logSpy).toHaveBeenCalledWith('2 sets to 0\n')
     logSpy.mockRestore()
 
     // Verify that the debugMatchLedger function was called
@@ -54,7 +54,7 @@ describe('queryMatchResult', () => {
     queryMatchResult(match, true)
 
     expect(logSpy).toHaveBeenCalledWith('Person A defeated Person B')
-    expect(logSpy).toHaveBeenCalledWith('2 sets to 0')
+    expect(logSpy).toHaveBeenCalledWith('2 sets to 0\n')
     logSpy.mockRestore()
 
     // Verify that the debugMatchLedger function was called

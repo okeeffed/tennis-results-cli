@@ -5,13 +5,13 @@ export function logMatchResults(match: Match, matchResults: MatchResultState) {
     case 0:
       console.log(`${match.playerOne} defeated ${match.playerTwo}`)
       console.log(
-        `${matchResults.playerOneSetsWon} sets to ${matchResults.playerTwoSetsWon}`
+        `${matchResults.playerOneSetsWon} sets to ${matchResults.playerTwoSetsWon}\n`
       )
       break
     case 1:
       console.log(`${match.playerTwo} defeated ${match.playerOne}`)
       console.log(
-        `${matchResults.playerTwoSetsWon} sets to ${matchResults.playerOneSetsWon}`
+        `${matchResults.playerTwoSetsWon} sets to ${matchResults.playerOneSetsWon}\n`
       )
       break
     default:

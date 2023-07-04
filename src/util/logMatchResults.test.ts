@@ -30,7 +30,7 @@ describe('logMatchResults', () => {
 
     logMatchResults(match, matchResults)
     expect(logSpy).toHaveBeenCalledWith('Person A defeated Person B')
-    expect(logSpy).toHaveBeenCalledWith('2 sets to 0')
+    expect(logSpy).toHaveBeenCalledWith('2 sets to 0\n')
     logSpy.mockRestore()
   })
 
@@ -62,7 +62,7 @@ describe('logMatchResults', () => {
 
     logMatchResults(match, matchResults)
     expect(logSpy).toHaveBeenCalledWith('Person B defeated Person A')
-    expect(logSpy).toHaveBeenCalledWith('2 sets to 0')
+    expect(logSpy).toHaveBeenCalledWith('2 sets to 0\n')
     logSpy.mockRestore()
   })
 })

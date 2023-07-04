@@ -1,5 +1,6 @@
-import { deriveCurrentMatchScore } from './deriveCurrentSetScore'
-import type { RallyAction, MatchResultState } from './types'
+import { deriveCurrentMatchScore } from '@/util/deriveCurrentSetScore'
+import type { RallyAction, MatchResultState } from '@/util/types'
+import { argv } from '@/util/argv'
 
 const initialValue = {
   playerOneScore: 0,
@@ -10,83 +11,89 @@ const initialValue = {
   history: [],
 }
 
-function replayMatchReducer(
+function calculateMatchReducer(
   state: MatchResultState = initialValue,
   payload: RallyAction
 ) {
   // Base case: if there is a game winner, game is over.
-  if (state.matchWinner) {
-    throw new Error('Cannot update state after match is over.')
+  // Handle it because the provided text file includes scores
+  // that continue after the match is over.
+  if (state.matchWinner !== undefined) {
+    if (argv.debug || argv.d) {
+      console.warn('Warning: Attemping to update state after match is over.')
+    }
+    return state
   }
 
-  let playerOneScore = state.playerOneScore
-  let playerTwoScore = state.playerTwoScore
-  let playerOneSetsWon = state.playerOneSetsWon
-  let playerTwoSetsWon = state.playerTwoSetsWon
-  let currentScore = state.currentScore
-  let newValue
-
-  if (state.currentScore === 'Game') {
-    playerOneScore = 0
-    playerTwoScore = 0
-    currentScore = '0 - 0'
-  }
+  const shouldStartNewGame = state.currentScore === 'Game'
+  const playerOneCurrentScore = state.playerOneScore
+  const playerTwoCurrentScore = state.playerTwoScore
+  const playerOneSetsWon = state.playerOneSetsWon
+  const playerTwoSetsWon = state.playerTwoSetsWon
 
   switch (payload.type) {
     case 'PLAYER_ONE_WIN':
-      playerOneScore = playerOneScore + 1
-      currentScore = deriveCurrentMatchScore(
-        `${playerOneScore} - ${playerTwoScore}`
+      const playerOneScore = shouldStartNewGame ? 1 : playerOneCurrentScore + 1
+      const p1WinP2Score = shouldStartNewGame ? 0 : playerTwoCurrentScore
+      const p1WinCurrentScore = deriveCurrentMatchScore(
+        `${playerOneScore} - ${p1WinP2Score}`
       )
-      playerOneSetsWon =
-        currentScore === 'Game' ? playerOneSetsWon + 1 : playerOneSetsWon
+      const isP1Game = p1WinCurrentScore === 'Game'
+      const newPlayerOneSetsWon = isP1Game
+        ? state.playerOneSetsWon + 1
+        : state.playerOneSetsWon
 
-      newValue = {
+      const p1RallyWin = {
         rallyWinnerRawValue: '0',
-        playerOneScore: playerOneScore,
-        playerTwoScore: playerTwoScore,
-        playerOneSetsWon: playerOneSetsWon,
+        playerOneScore,
+        playerTwoScore: p1WinP2Score,
+        playerOneSetsWon: newPlayerOneSetsWon,
         playerTwoSetsWon: playerTwoSetsWon,
-        currentScore: currentScore,
-        matchWinner:
-          currentScore === 'Game' && playerOneSetsWon === 2 ? 0 : undefined,
+        currentScore: p1WinCurrentScore,
+        matchWinner: isP1Game && newPlayerOneSetsWon === 2 ? 0 : undefined,
       }
 
       return {
-        ...newValue,
-        history: [...state.history, newValue],
+        ...p1RallyWin,
+        history: [...state.history, p1RallyWin],
       }
     case 'PLAYER_TWO_WIN':
-      playerTwoScore = playerTwoScore + 1
-      currentScore = deriveCurrentMatchScore(
-        `${playerOneScore} - ${playerTwoScore}`
+      const playerTwoScore = shouldStartNewGame ? 1 : playerTwoCurrentScore + 1
+      const p2WinP1Score = shouldStartNewGame ? 0 : playerOneCurrentScore
+      const p2WinCurrentScore = deriveCurrentMatchScore(
+        `${p2WinP1Score} - ${playerTwoScore}`
       )
-      playerTwoSetsWon =
-        currentScore === 'Game' ? playerTwoSetsWon + 1 : playerTwoSetsWon
+      const isP2Game = p2WinCurrentScore === 'Game'
 
-      newValue = {
+      const newPlayerTwoSetsWon = isP2Game
+        ? playerTwoSetsWon + 1
+        : playerTwoSetsWon
+
+      const p2RallyWin = {
         rallyWinnerRawValue: '1',
-        playerOneScore: playerOneScore,
-        playerTwoScore: playerTwoScore,
+        playerOneScore: p2WinP1Score,
+        playerTwoScore,
         playerOneSetsWon: playerOneSetsWon,
-        playerTwoSetsWon: playerTwoSetsWon,
-        currentScore: currentScore,
-        matchWinner:
-          currentScore === 'Game' && playerTwoSetsWon === 2 ? 1 : undefined,
+        playerTwoSetsWon: newPlayerTwoSetsWon,
+        currentScore: p2WinCurrentScore,
+        matchWinner: isP2Game && newPlayerTwoSetsWon === 2 ? 1 : undefined,
       }
+
+      // console.log('p2RallyWin', p2RallyWin.matchWinner)
       return {
-        ...newValue,
-        history: [...state.history, newValue],
+        ...p2RallyWin,
+        history: [...state.history, p2RallyWin],
       }
     default:
-      console.warn('Invalid action type. Returning current state.')
+      console.warn('Warning: Invalid action type. Returning current state.')
       return state
   }
 }
 
 export function calculateMatchResult(rallies: RallyAction[]) {
   return rallies.reduce(
-    (acc: MatchResultState, cur: RallyAction) => replayMatchReducer(acc, cur),
+    (acc: MatchResultState, cur: RallyAction) =>
+      calculateMatchReducer(acc, cur),
     initialValue
   )
 }
