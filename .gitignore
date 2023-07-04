@@ -1,6 +1,9 @@
 node_modules/
 dist/
 
+# Ignore help docs for now
+docs/
+
 # https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
 .yarn/*
 !.yarn/patches

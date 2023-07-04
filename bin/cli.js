@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
+'use strict'
 
-module.exports = require('../dist/index.js');
+module.exports = require('../dist/index.js')

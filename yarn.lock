@@ -1242,12 +1242,14 @@ __metadata:
     "@swc/jest": ^0.2.26
     "@tsconfig/node18": ^18.2.0
     "@types/jest": ^29.5.2
+    "@types/jest-in-case": ^1.0.6
     "@types/node": ^20.3.3
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.61.0
     eslint: ^8.44.0
     husky: ^8.0.3
     jest: ^29.5.0
+    jest-in-case: ^1.0.2
     nodemon: ^2.0.22
     ts-node: ^10.9.1
     tsup: ^7.1.0
@@ -1532,7 +1534,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.5.2":
+"@types/jest-in-case@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@types/jest-in-case@npm:1.0.6"
+  dependencies:
+    "@types/jest": "*"
+    "@types/node": "*"
+  checksum: 6bf79f5d12747247e88e65c2bf3473455e81c49c8f9512f8293611cc3d3c4e10df08e1a81bedd6e09518c1ab91f774a180d0dbdeeafb9c7dc5b19d978bc4bdbe
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:*, @types/jest@npm:^29.5.2":
   version: 29.5.2
   resolution: "@types/jest@npm:29.5.2"
   dependencies:
@@ -3849,6 +3861,13 @@ __metadata:
     fsevents:
       optional: true
   checksum: 3828ff7783f168e34be2c63887f82a01634261f605dcae062d83f979a61c37739e21b9607ecb962256aea3fbe5a530a1acee062d0026fcb47c607c12796cf3b7
+  languageName: node
+  linkType: hard
+
+"jest-in-case@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "jest-in-case@npm:1.0.2"
+  checksum: 251dbf0352bcccbd39ef0f751d885ddc679ca94f1544ed12b9c1c9ba0751f6ed913258f07f18cdd7f0f59d06c25be4b7bb12dcd222c1d9b4159b36c6dfee8676
   languageName: node
   linkType: hard
 
