@@ -28,9 +28,7 @@ jobs:
         with:
           node-version: '${{ env.node_version }}'
           cache: 'yarn'
-          registry-url: 'https://npm.pkg.github.com'
-          # Defaults to the user or organization that owns the workflow file
-          scope: '@okeeffed'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -68,3 +66,7 @@ jobs:
 
       - name: Check build
         run: yarn build
+
+      - run: Publish package to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
