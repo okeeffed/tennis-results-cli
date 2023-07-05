@@ -67,6 +67,8 @@ jobs:
       - name: Check build
         run: yarn build
 
+      # For this particular repo, I don't care if publishing happens on branches.
+      # If it passes the tests and build, then let's just publish regardless of branch.
       - run: Publish package to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
