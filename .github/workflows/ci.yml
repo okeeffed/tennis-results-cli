@@ -71,6 +71,6 @@ jobs:
       # If it passes the tests and build, then let's just publish regardless of branch.
       # This will also fail unless a package version has been bumped.
       - name: Publish package to NPM
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
