@@ -69,6 +69,7 @@ jobs:
 
       # For this particular repo, I don't care if publishing happens on branches.
       # If it passes the tests and build, then let's just publish regardless of branch.
+      # This will also fail unless a package version has been bumped.
       - name: Publish package to NPM
         run: npm publish
         env:
