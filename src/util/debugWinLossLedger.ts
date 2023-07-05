@@ -5,18 +5,21 @@ import { WinLossInput } from './types'
  * Prints a CLI table to help debug match results.
  * It emulates what was given in the README.
  */
-export function debugWinLossLedger(results: WinLossInput[]) {
+export function debugWinLossLedger(
+  results: WinLossInput[],
+  targetPlayer: string
+) {
   const table = new Table({
     head: ['Game', 'Result', 'Wins', 'Losses'],
   })
 
-  table.push([`Debugging results for ${results[0].targetPlayer}`, '', '', ''])
+  table.push([`Debugging results for ${targetPlayer}`, '', '', ''])
 
   let wins = 0
   let losses = 0
 
   results.forEach((entry) => {
-    const isPlayerOne = entry.match.playerOne === entry.targetPlayer
+    const isPlayerOne = entry.match.playerOne === targetPlayer
     const winner = entry.matchResults.matchWinner
     const isWinner =
       (winner === 0 && isPlayerOne) || (winner === 1 && !isPlayerOne)

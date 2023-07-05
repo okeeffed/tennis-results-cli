@@ -19,7 +19,7 @@ export function queryPlayerWinLoss(
     }))
 
   if (debug) {
-    debugWinLossLedger(playerMatches)
+    debugWinLossLedger(playerMatches, targetPlayer)
   }
 
   const playerMatchResults = playerMatches.reduce(calculateWinLossForPlayer, {
