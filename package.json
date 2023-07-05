@@ -14,7 +14,9 @@
   "engines": {
     "node": ">=18"
   },
-  "bin": "./bin/cli.js",
+  "bin": {
+    "tennis-results-cli": "./bin/cli.js"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
@@ -43,7 +45,7 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts",
     "build": "tsup src/index.ts --dts --format esm,cjs",
-    "install:npm": "npm uninstall -g . && npm i --force -g . && google-search-console help",
+    "install:npm": "npm uninstall -g . && npm i --force -g . && tennis-results-cli --help",
     "deploy": "npm run build && npm run install:npm",
     "dedupe-check": "bin/dedupe-check"
   },

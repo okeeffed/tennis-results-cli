@@ -5,6 +5,7 @@ import type { Match } from '@/util/types'
 import { queryMatchResult } from '@/queries/queryMatchResult'
 import path from 'path'
 import { argv } from '@/util/argv'
+import { queryPlayerWinLoss } from './queries/queryPlayerWinLoss'
 
 const TARGET_FILE = 'tournaments/full_tournament_valid.txt'
 const HELP = `
@@ -34,7 +35,12 @@ function delegateToCommand({
     queryMatchResult(match, argv.debug || argv.d)
   } else if (/Games Player/.test(input)) {
     const player = input.split('Games Player ')[1]
-    console.log(player)
+
+    if (!player) {
+      throw new Error(`Player not found: ${player}`)
+    }
+
+    queryPlayerWinLoss(matches, player, argv.debug || argv.d)
   } else {
     throw new Error(`Unexpected input: ${input}`)
   }
@@ -84,7 +90,13 @@ function main() {
   })
 
   if (argv.dev) {
-    const fallbackInput = ['Score Match 01', 'Score Match 02']
+    const fallbackInput = [
+      'Score Match 01',
+      'Score Match 02',
+      'Games Player Person A',
+      'Games Player Person B',
+      'Games Player Person C',
+    ]
     fallbackInput.map((line) =>
       delegateToCommand({
         input: line,

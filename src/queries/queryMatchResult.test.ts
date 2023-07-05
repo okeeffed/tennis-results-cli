@@ -8,6 +8,10 @@ jest.mock('@/util/debugMatchLedger', () => ({
 }))
 
 describe('queryMatchResult', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('it should print the expected match result and not call debugMatchLedger when debug is false', () => {
     // Mock implementation so it does not log results
     const logSpy = jest.spyOn(console, 'log').mockImplementation(jest.fn)
