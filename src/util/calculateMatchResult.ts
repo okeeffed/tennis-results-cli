@@ -20,7 +20,7 @@ function calculateMatchReducer(
   // that continue after the match is over.
   if (state.matchWinner !== undefined) {
     if (argv.debug || argv.d) {
-      console.warn('Warning: Attemping to update state after match is over.')
+      console.warn('Warning: Attempting to update state after match is over.')
     }
     return state
   }
