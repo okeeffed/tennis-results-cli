@@ -1,6 +1,6 @@
 {
   "name": "@okeeffed/tennis-results-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Dennis O'Keeffe",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
